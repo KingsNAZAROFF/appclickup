@@ -4,28 +4,24 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import uz.pdp.appclickup.entity.template.AbsUUIDEntity;
+import uz.pdp.appclickup.entity.template.AbsLongEntity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.OneToOne;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Attachment extends AbsUUIDEntity {
+public class ClickApps extends AbsLongEntity {
 
     @Column(nullable = false)
     private String name;
 
-    @Column(nullable = false)
-    private String originalName;
-
-    @Column(nullable = false)
-    private Long size;
-
-    @Column(nullable = false)
-    private String contentType;
+    @OneToOne(fetch = FetchType.LAZY)
+    private Icon icon;
 
 }

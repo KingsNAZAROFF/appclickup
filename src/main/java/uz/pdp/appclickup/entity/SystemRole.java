@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import uz.pdp.appclickup.entity.template.AbsUUIDEntity;
+import uz.pdp.appclickup.entity.template.AbsLongEntity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,18 +14,9 @@ import javax.persistence.Entity;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Attachment extends AbsUUIDEntity {
+public class SystemRole extends AbsLongEntity {
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String name;
-
-    @Column(nullable = false)
-    private String originalName;
-
-    @Column(nullable = false)
-    private Long size;
-
-    @Column(nullable = false)
-    private String contentType;
 
 }

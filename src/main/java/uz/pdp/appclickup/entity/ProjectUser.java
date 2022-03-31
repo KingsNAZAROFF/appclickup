@@ -1,12 +1,11 @@
 package uz.pdp.appclickup.entity;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import uz.pdp.appclickup.entity.enums.WorkspacePermissionName;
-import uz.pdp.appclickup.entity.template.AbsLongEntity;
+import uz.pdp.appclickup.entity.template.AbsUUIDEntity;
 
 import javax.persistence.*;
 
@@ -15,12 +14,15 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class WorkspacePermission extends AbsLongEntity {
+public class ProjectUser extends AbsUUIDEntity {
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    private WorkspaceRole workspaceRole;
+    @ManyToOne(fetch = FetchType.LAZY,optional = false)
+    private Project project;
+
+    @ManyToOne(fetch = FetchType.LAZY,optional = false)
+    private User user;
 
     @Enumerated(EnumType.STRING)
-    private WorkspacePermissionName permissionName;
+    private WorkspacePermissionName taskPermission;
 
 }

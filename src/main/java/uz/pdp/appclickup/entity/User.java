@@ -7,11 +7,9 @@ import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import uz.pdp.appclickup.entity.enums.SystemRoleName;
 import uz.pdp.appclickup.entity.template.AbsUUIDEntity;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
 import java.util.Collection;
 import java.util.Collections;
 
@@ -22,13 +20,16 @@ import java.util.Collections;
 @Entity(name = "users")
 public class User extends AbsUUIDEntity implements UserDetails {
 
+    @Column(nullable = false)
     private String fullName;
 
-    @Column(unique = true, nullable = false)
+    @Column(nullable = false, unique = true)
     private String email;
 
+    @Column(nullable = false)
     private String password;
 
+    @Column(nullable = false)
     private String color;
 
     private String initialLetter;
@@ -36,22 +37,22 @@ public class User extends AbsUUIDEntity implements UserDetails {
     @OneToOne(fetch = FetchType.LAZY)
     private Attachment avatar;
 
-    private boolean enabled;
+    @ManyToOne
+    private SystemRole systemRole;
+
     private boolean accountNonExpired = true;
+
     private boolean accountNonLocked = true;
+
     private boolean credentialsNonExpired = true;
 
-    @Enumerated(EnumType.STRING)
-    private SystemRoleName systemRoleName;
+    private boolean enabled;
 
-    private String emailCode;
-
-    private Timestamp lastActive;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        SimpleGrantedAuthority simpleGrantedAuthority = new SimpleGrantedAuthority(this.systemRoleName.name());
-        return Collections.singletonList(simpleGrantedAuthority);
+        SimpleGrantedAuthority simpleGrantedAuthority = new SimpleGrantedAuthority(this.systemRole.getName());
+        return Collections.singleton(simpleGrantedAuthority);
     }
 
     @Override
@@ -77,12 +78,5 @@ public class User extends AbsUUIDEntity implements UserDetails {
     @Override
     public boolean isEnabled() {
         return this.enabled;
-    }
-
-    public User(String fullName, String email, String password, SystemRoleName systemRoleName) {
-        this.fullName = fullName;
-        this.email = email;
-        this.password = password;
-        this.systemRoleName = systemRoleName;
     }
 }

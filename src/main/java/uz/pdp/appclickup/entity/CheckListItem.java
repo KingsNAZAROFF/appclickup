@@ -1,5 +1,6 @@
 package uz.pdp.appclickup.entity;
 
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -8,24 +9,20 @@ import uz.pdp.appclickup.entity.template.AbsUUIDEntity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.ManyToOne;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Attachment extends AbsUUIDEntity {
+public class CheckListItem extends AbsUUIDEntity {
 
     @Column(nullable = false)
     private String name;
 
-    @Column(nullable = false)
-    private String originalName;
-
-    @Column(nullable = false)
-    private Long size;
-
-    @Column(nullable = false)
-    private String contentType;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private CheckList checkList;
 
 }

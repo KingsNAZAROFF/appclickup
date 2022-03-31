@@ -33,4 +33,5 @@ public class WorkspaceUser extends AbsUUIDEntity {
     private Timestamp dateInvited;
 
     private Timestamp dateJoined;
+
 }

@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import uz.pdp.appclickup.entity.enums.Type;
 import uz.pdp.appclickup.entity.template.AbsLongEntity;
 
 import javax.persistence.*;
@@ -13,22 +14,24 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"name", "owner_id"})})
-public class Workspace extends AbsLongEntity {
+public class Status extends AbsLongEntity {
 
     @Column(nullable = false)
     private String name;
 
+    @ManyToOne(fetch = FetchType.LAZY,optional = false)
+    private Space space;
+
+    @ManyToOne(fetch = FetchType.LAZY,optional = false)
+    private Project project;
+
+    @ManyToOne(fetch = FetchType.LAZY,optional = false)
+    private Category category;
+
     @Column(nullable = false)
     private String color;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    private User owner;
-
-    @Column(nullable = false)
-    private String initialLetter;
-
-    @OneToOne(fetch = FetchType.LAZY)
-    private Attachment avatar;
+    @Enumerated(EnumType.STRING)
+    private Type type;
 
 }
